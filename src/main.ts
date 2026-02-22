@@ -5,14 +5,18 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { getCorsConfig } from './core/config';
 import { getValidationPipeConfig } from './core/config/validation-pipe.config';
+import { GrpcExceptionFilter } from './shared/filters';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const config = app.get(ConfigService);
   const logger = new Logger();
-
+  
+  app.use(cookieParser(config.getOrThrow('COOKIE_SECRET')));
+  
   app.useGlobalPipes(new ValidationPipe(getValidationPipeConfig()));
+  app.useGlobalFilters(new GrpcExceptionFilter());
 
   app.enableCors(getCorsConfig(config));
 

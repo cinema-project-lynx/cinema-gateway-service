@@ -1,19 +1,19 @@
 import { ValidationArguments, ValidatorConstraint } from 'class-validator';
 import { ValidatorConstraintInterface } from 'class-validator';
 import { SendOtpRequest } from 'src/modules/auth/dto';
-  
-@ValidatorConstraint({name: "IdentifierValidator", async: false})
+
+@ValidatorConstraint({ name: 'IdentifierValidator', async: false })
 export class IdentifierValidator implements ValidatorConstraintInterface {
   validate(value: string, args: ValidationArguments): boolean {
     const object = args.object as SendOtpRequest;
-    
+
     if (object.type === 'email') {
       return (
         typeof value === 'string' &&
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
       );
     }
-    
+
     if (object.type === 'phone') {
       return typeof value === 'string' && /^\+380\d{9}$/.test(value);
     }
