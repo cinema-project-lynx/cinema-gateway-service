@@ -7,11 +7,14 @@ import { AccountModule } from 'src/modules/account/account.module';
 import { PassportModule } from '@cinema-project-lynx/passport';
 import { ConfigService } from '@nestjs/config';
 import { getPasportConfig } from './config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [configuration],
+      expandVariables: true,
     }),
     AuthModule,
     AccountModule,
