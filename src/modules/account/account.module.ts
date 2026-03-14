@@ -1,30 +1,31 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
+import { AccountController } from './account.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
-import { AuthClientGrpc } from './auth.grpc';
+import { AccountClientGrpc } from './account.grpc';
 import { AuthGuard } from 'src/shared/guards';
 import { PROTO_PATHS } from '@cinema-project-lynx/contracts';
+import { RolesGuard } from 'src/shared/guards';
 
 @Module({
   imports: [
     ClientsModule.registerAsync([
       {
-        name: 'AUTH_PACKAGE',
+        name: 'ACCOUNT_PACKAGE',
         useFactory: (configService: ConfigService) => ({
           transport: Transport.GRPC,
           options: {
-            package: 'auth.v1',
+            package: 'account.v1',
             protoPath:
-              PROTO_PATHS.AUTH,
-            url: configService.getOrThrow<string>('AUTH_GRPC_URL'),
+              PROTO_PATHS.ACCOUNT,
+            url: configService.getOrThrow<string>('ACCOUNT_GRPC_URL'),
           },
         }),
         inject: [ConfigService],
-      }
+      },
     ]),
   ],
-  controllers: [AuthController],
-  providers: [AuthClientGrpc, AuthGuard],
+  controllers: [AccountController],
+  providers: [AccountClientGrpc, AuthGuard, RolesGuard],
 })
-export class AuthModule {}
+export class AccountModule {}

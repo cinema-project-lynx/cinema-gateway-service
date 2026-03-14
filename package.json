@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@cinema-project-lynx/cinema-common": "^1.0.0",
-    "@cinema-project-lynx/contracts": "^1.0.4",
+    "@cinema-project-lynx/contracts": "^1.0.6",
     "@cinema-project-lynx/passport": "^1.0.0",
     "@grpc/grpc-js": "^1.14.3",
     "@grpc/proto-loader": "^0.8.0",

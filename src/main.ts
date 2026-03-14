@@ -14,7 +14,7 @@ async function bootstrap() {
   const logger = new Logger();
   
   app.use(cookieParser(config.getOrThrow('COOKIE_SECRET')));
-  
+
   app.useGlobalPipes(new ValidationPipe(getValidationPipeConfig()));
   app.useGlobalFilters(new GrpcExceptionFilter());
 
